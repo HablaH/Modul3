@@ -10,16 +10,9 @@ namespace AdventureGame
     {
         static void Main(string[] args)
         {
-            Room[] map = new Room[]
-            {
-                new Room('A', "red"),
-                new Room('B', "green"),
-                new Room('C', "orange"),
-                new Room('D', "blue"),
-                new Room('E', "yellow"),
-                new Room('F', null),
-            };
+            Map map1 = new Map();
             Player player1 = new Player(Console.ReadLine());
+            Console.WriteLine();
         }
     }
 }

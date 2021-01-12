@@ -26,13 +26,12 @@ namespace AdventureGame
                     inventory[Array.IndexOf(inventory, key)] = currentPosition.key;
                     currentPosition.key = null;
                 }
-                else continue;
             }
         }
 
-        public void UnlockDoor()
+        public void UnlockDoor(Door door, Key key)
         {
-
+            if (inventory.Any())
         }
 
         public void MoveTo(char room)

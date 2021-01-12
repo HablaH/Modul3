@@ -10,7 +10,7 @@ namespace AdventureGame
     {
         public bool locked = true;
         public string color;
-        public Char[] connectedRooms;
+        public char[] connectedRooms;
 
         public Door(string color)
         {
@@ -18,15 +18,7 @@ namespace AdventureGame
             FromTo(color);
         }
 
-            public void Unlock(Key key)
-        {
-            if (key.color == color)
-            {
-                locked = false;
-            }
-        }
-
-            public void FromTo(string color)
+        public void FromTo(string color)
             {
                 if (color == "red") connectedRooms = new char[] {'A', 'B'};
                 if (color == "green") connectedRooms = new char[] {'A', 'D'};
