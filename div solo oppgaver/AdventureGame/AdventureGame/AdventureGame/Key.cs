@@ -14,5 +14,16 @@ namespace AdventureGame
         {
             this.color = color;
         }
+
+        public string KeyColor()
+        {
+            return color;
+        }
+
+        public Key GetKey()
+        {
+            return this;
+        }
+
     }
 }

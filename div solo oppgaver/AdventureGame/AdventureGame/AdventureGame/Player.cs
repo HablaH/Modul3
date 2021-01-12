@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    class Player
+    class Player : Game
     {
-        public Room currentPosition;
         public Key[] inventory = new Key[5];
         public string name;
 
@@ -17,31 +17,41 @@ namespace AdventureGame
             name = _name;
         }
 
-        public void PickUp()
+        public void PickUp(Key key)
         {
-            foreach (Key key in inventory)
-            {
-                if (key == null)
-                {
-                    inventory[Array.IndexOf(inventory, key)] = currentPosition.key;
-                    currentPosition.key = null;
-                }
-            }
+            int indexOfEmpty = Array.IndexOf(inventory, null);
+            Console.WriteLine($"Key = {key.GetKey().color}");
+            inventory[indexOfEmpty] = key.GetKey();
         }
 
         public void UnlockDoor(Door door, Key key)
         {
-            if (inventory.Any())
+            if(!currentRoom.ConnectedDoors(doors).Contains(door)) Console.WriteLine("That door isn't in this room");
+            if (!inventory.Contains(key)) Console.WriteLine("You don't have the correct key");
+            else door.Unlock(key);
         }
 
-        public void MoveTo(char room)
+        public void Enter(Door door)
         {
-            currentPosition = 
+            if (!currentRoom.ConnectedDoors(doors).Contains(door))
+            {
+                Console.WriteLine("That door isn't in this room");
+                return;
+            }
+
+            if (currentRoom == door.connectedRooms[0]) currentRoom = door.connectedRooms[1];
+            else currentRoom = door.connectedRooms[1];
         }
 
-        public void EnterDoor(Door door)
+
+        public string ShowInventory()
         {
-            if (currentPosition.roomName == door.connectedRooms[0]) 
+            string str = String.Empty;
+            foreach (Key key in inventory)
+            {
+                if(key != null) str += key.KeyColor() + " key";
+            }
+            return str;
         }
     }
 }

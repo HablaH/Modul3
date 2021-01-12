@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +12,7 @@ namespace AdventureGame
     {
         static void Main(string[] args)
         {
-            Map map1 = new Map();
-            Player player1 = new Player(Console.ReadLine());
-            Console.WriteLine();
+            Game game = new Game();
         }
     }
 }
