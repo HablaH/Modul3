@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    class Player : Game
+    class Player 
     {
         public Key[] inventory = new Key[5];
         public string name;
+        public Room currentRoom;
 
         public Player(string _name)
         {
@@ -20,27 +21,27 @@ namespace AdventureGame
         public void PickUp(Key key)
         {
             int indexOfEmpty = Array.IndexOf(inventory, null);
-            Console.WriteLine($"Key = {key.GetKey().color}");
+
             inventory[indexOfEmpty] = key.GetKey();
         }
 
         public void UnlockDoor(Door door, Key key)
         {
-            if(!currentRoom.ConnectedDoors(doors).Contains(door)) Console.WriteLine("That door isn't in this room");
+            if(!currentRoom.ConnectedDoors().Contains(door)) Console.WriteLine("That door isn't in this room");
             if (!inventory.Contains(key)) Console.WriteLine("You don't have the correct key");
             else door.Unlock(key);
         }
 
         public void Enter(Door door)
         {
-            if (!currentRoom.ConnectedDoors(doors).Contains(door))
+            if (!currentRoom.ConnectedDoors().Contains(door))
             {
                 Console.WriteLine("That door isn't in this room");
                 return;
             }
 
-            if (currentRoom == door.connectedRooms[0]) currentRoom = door.connectedRooms[1];
-            else currentRoom = door.connectedRooms[1];
+            currentRoom = currentRoom == door.connectedRooms[0] ? door.connectedRooms[1] : door.connectedRooms[0];
+            Console.WriteLine("you entered");
         }
 
 

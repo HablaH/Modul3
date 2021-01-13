@@ -17,9 +17,9 @@ namespace AdventureGame
             this.key = new Key(key);
         }
 
-        public Door[] ConnectedDoors(Door[] doors)
+        public Door[] ConnectedDoors()
         {
-            return doors.Where(d => d.connectedRooms.Contains(this)).ToArray();
+            return AdventureGame.Game.doors.Where(d => d.connectedRooms.Contains(this)).ToArray();
         }
     }
 }

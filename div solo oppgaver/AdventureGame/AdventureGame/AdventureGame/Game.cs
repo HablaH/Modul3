@@ -10,21 +10,20 @@ namespace AdventureGame
     class Game
     {
         public Room[] map;
-        public Door[] doors;
+        public static Door[] doors;
         public Player player;
-        public Room currentRoom;
+        
         private bool victory = false;
 
 
         public Game()
         {
             SetUpGame();
-            Console.WriteLine("Enter player name:");
-            player = new Player(Console.ReadLine());
+            
             Console.WriteLine(player.name);
             Intro();
-            
-            
+
+
             while (!victory)
             {
                 HandleCommand(Console.ReadLine());
@@ -40,11 +39,12 @@ namespace AdventureGame
 
         public void HandleCommand(string command)
         {
+            Console.Clear();
             switch (command)
             {
                 case "pick up key":
-                    player.PickUp(currentRoom.key);
-                    currentRoom.key = null;
+                    player.PickUp(player.currentRoom.key);
+                    player.currentRoom.key = null;
                     break;
                 case "unlock red door":
                     player.UnlockDoor(doors[0], player.inventory[0]);
@@ -52,11 +52,11 @@ namespace AdventureGame
                 case "unlock green door":
                     player.UnlockDoor(doors[1], player.inventory[1]);
                     break;
-                case "unlock yellow door":
-                    player.UnlockDoor(doors[2], player.inventory[2]);
-                    break;
                 case "unlock blue door":
-                    player.UnlockDoor(doors[3], player.inventory[3]);
+                    player.UnlockDoor(doors[3], player.inventory[2]);
+                    break;
+                case "unlock yellow door":
+                    player.UnlockDoor(doors[2], player.inventory[3]);
                     break;
                 case "unlock black door":
                     player.UnlockDoor(doors[4], player.inventory[4]);
@@ -75,6 +75,14 @@ namespace AdventureGame
                     break;
                 case "enter black door":
                     player.Enter(doors[4]);
+                    Outro();
+                    break;
+                case "inventory":
+                    player.ShowInventory();
+                    Console.ReadLine();
+                    break;
+                default:
+                    Console.WriteLine("wrong command");
                     break;
             }
         }
@@ -113,14 +121,19 @@ namespace AdventureGame
 
         void ShowRoom()
         {
-            Key key = currentRoom.key;
-            Door[] currentDoors = currentRoom.ConnectedDoors(doors);
+            Key key = player.currentRoom.key;
+            Door[] currentDoors = player.currentRoom.ConnectedDoors();
             string keyText = key != null ? $"On the floor you see a {key.KeyColor()} key." : "There is nothing here..";
-            Console.WriteLine($"On the floor you see a {currentRoom.key.KeyColor()} key");
-            Console.WriteLine($"There are {currentDoors.Length} leading out of the room.");
+            string isAre = currentDoors.Length == 1 ? "is" : "are";
+            string doorDoors = currentDoors.Length == 1 ? "door" : "doors";
+
+
+            Console.WriteLine(keyText);
+            Console.WriteLine($"There {isAre} {currentDoors.Length} {doorDoors} leading out of the room.");
             foreach (Door door in currentDoors)
             {
-                Console.WriteLine($"One door is {door.color}, it is ");
+                string lockedDoor = door.locked ? "locked" : "unlocked";
+                Console.WriteLine($"One door is {door.color}, it is {lockedDoor} ");
             }
         }
 
@@ -144,12 +157,18 @@ namespace AdventureGame
         {
             map = CreateMap();
             doors = CreateDoors(map);
-            currentRoom = map[0];
+            Console.WriteLine("Enter player name:");
+            player = new Player(Console.ReadLine());
+            player.currentRoom = map[0];
         }
 
         void Outro()
         {
-
+            Console.WriteLine("You finally see the light.");
+            Console.WriteLine("From this room you can finally get out!");
+            Console.WriteLine("Ctrl + C");
+            Console.ReadLine();
+            
         }
     }
 }
