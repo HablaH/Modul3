@@ -8,40 +8,40 @@ namespace TicTacToe
 {
     public class Grid
     {
-        public int height;
-        public int width;
-        public Vector[] positions;
+        public int Height;
+        public int Width;
+        public Vector[] Positions;
 
         public void Create(int height, int width)
         {
-            this.height = height;
-            this.width = width;
+            this.Height = height;
+            this.Width = width;
 
             // Set vector position array size
             int arraySize = width * height;
 
-            // Setup positions array
-            positions = new Vector[arraySize];
+            // Setup Positions array
+            Positions = new Vector[arraySize];
 
-            // Loop through x and y axis to create grid positions
+            // Loop through X and Y axis to create grid Positions
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
                     // Fill position array element
                     int index = FetchIndex(x, y);
-                    positions[index] = new Vector(x, y);
+                    Positions[index] = new Vector(x, y);
                 }
             }
         }
 
         public int FetchIndex(Vector position)
         {
-            return position.x + (position.y * height);
+            return position.X + (position.Y * Height);
         }
         public int FetchIndex(int x, int y)
         {
-            return x + (y * height);
+            return x + (y * Height);
         }
     }
 }

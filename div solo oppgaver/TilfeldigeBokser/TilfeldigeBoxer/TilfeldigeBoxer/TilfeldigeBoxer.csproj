@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{115A8617-67EC-427E-9CB5-656A69FA2E6F}</ProjectGuid>
+    <ProjectGuid>{BD8141F4-4D48-4BFE-97A3-BB5BC6EED7AC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TicTacToe</RootNamespace>
-    <AssemblyName>TicTacToe</AssemblyName>
+    <RootNamespace>TilfeldigeBoxer</RootNamespace>
+    <AssemblyName>TilfeldigeBoxer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,13 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI.cs" />
-    <Compile Include="Board.cs" />
-    <Compile Include="Grid.cs" />
+    <Compile Include="Box.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="Vector.cs" />
+    <Compile Include="VirtualScreen.cs" />
+    <Compile Include="VirtualScreenCell.cs" />
+    <Compile Include="VirtualScreenRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

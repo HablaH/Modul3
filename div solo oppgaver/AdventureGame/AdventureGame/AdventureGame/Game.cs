@@ -78,7 +78,7 @@ namespace AdventureGame
                     Outro();
                     break;
                 case "inventory":
-                    player.ShowInventory();
+                    Console.WriteLine(player.ShowInventory());
                     Console.ReadLine();
                     break;
                 default:

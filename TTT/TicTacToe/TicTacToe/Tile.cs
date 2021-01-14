@@ -8,16 +8,16 @@ namespace TicTacToe
 {
     public class Tile
     {
-        public char fill;
+        public char Fill;
 
         public Tile()
         {
-            fill = '#';
+            Fill = '#';
         }
 
         public Tile(char fill)
         {
-            this.fill = fill;
+            this.Fill = fill;
         }
     }
 }

@@ -8,22 +8,36 @@ namespace TicTacToe
 {
     class Program
     {
-        public static string command = "";
+        
+        public static Board board = new Board(5, 5);
+        public static AI ai = new AI();
         static void Main(string[] args)
         {
-            Board board = new Board(5, 5);
-            while (true) 
+            board.Draw();
+            while (true)
             {
-                board.Draw();
-                command = Console.ReadLine();
-                ReadCommand(command);
+                ReadCommand(Console.ReadLine());
+                ai.Move();
             }
         }
 
         public static void ReadCommand(string command)
         {
-            Console.WriteLine(command);
-            Console.Clear();
+            string[] parameters = command.Split(',');
+            Tile tile = board.FetchTile(int.Parse(parameters[0]), int.Parse(parameters[1]));
+
+            if (tile != null)
+            {
+                tile.Fill = 'X';
+                Console.Clear();
+                board.Draw();
+                Console.WriteLine(command);
+            }
+            else
+            {
+                Console.WriteLine("error; vector is out of range or position is filled");
+                ReadCommand(Console.ReadLine());
+            }
         }
 
 
