@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AdventureGame
 {
     class Room
@@ -11,10 +8,11 @@ namespace AdventureGame
         public Key key;
         public char roomName;
 
-        public Room(char roomName, string key)
+
+        public Room(char roomName, string color)
         {
             this.roomName = roomName;
-            this.key = new Key(key);
+            this.key = new Key(color);
         }
 
         public Door[] ConnectedDoors()

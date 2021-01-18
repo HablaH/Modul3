@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventureGame
+﻿namespace AdventureGame
 {
     class Door
     {
@@ -27,12 +21,14 @@ namespace AdventureGame
                 if (color == "black") connectedRooms = new Room[] { rooms[4], rooms[5]};
             }
 
-        public void Unlock(Key key)
+        public void Unlock()
         {
-            if (color == key.color)
-            {
-                locked = false;
-            }
+            locked = false;
+        }
+
+        public Room GetRoom(Room currentRoom)
+        {
+            return currentRoom == connectedRooms[0] ? connectedRooms[1] : connectedRooms[0];
         }
     }
 }

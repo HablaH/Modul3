@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventureGame
 {
@@ -11,7 +6,7 @@ namespace AdventureGame
     {
         public Room[] map;
         public static Door[] doors;
-        public Player player;
+        public static Player player;
         
         private bool victory = false;
 
@@ -39,52 +34,20 @@ namespace AdventureGame
 
         public void HandleCommand(string command)
         {
+            // Unlock red door
+            string[] parameters = command.ToLower().Split(' ');
+
+            // Evaluate 
             Console.Clear();
-            switch (command)
+            switch (parameters[0]) 
             {
-                case "pick up key":
-                    player.PickUp(player.currentRoom.key);
-                    player.currentRoom.key = null;
-                    break;
-                case "unlock red door":
-                    player.UnlockDoor(doors[0], player.inventory[0]);
-                    break;
-                case "unlock green door":
-                    player.UnlockDoor(doors[1], player.inventory[1]);
-                    break;
-                case "unlock blue door":
-                    player.UnlockDoor(doors[3], player.inventory[2]);
-                    break;
-                case "unlock yellow door":
-                    player.UnlockDoor(doors[2], player.inventory[3]);
-                    break;
-                case "unlock black door":
-                    player.UnlockDoor(doors[4], player.inventory[4]);
-                    break;
-                case "enter red door":
-                    player.Enter(doors[0]);
-                    break;
-                case "enter green door":
-                    player.Enter(doors[1]);
-                    break;
-                case "enter yellow door":
-                    player.Enter(doors[2]);
-                    break;
-                case "enter blue door":
-                    player.Enter(doors[3]);
-                    break;
-                case "enter black door":
-                    player.Enter(doors[4]);
-                    Outro();
-                    break;
-                case "inventory":
-                    Console.WriteLine(player.ShowInventory());
-                    Console.ReadLine();
-                    break;
-                default:
-                    Console.WriteLine("wrong command");
-                    break;
+                case "unlock": player.UnlockDoor(parameters[1]); break;
+                case "enter": player.Enter(parameters[1]); break;
+                case "pickup": player.PickUp(player.currentRoom.key); break;
+                case "inventory": Console.WriteLine(player.inventory.ToString()); break;
+                case "inspect": break;
             }
+            return;
         }
 
         Room[] CreateMap()
@@ -96,7 +59,7 @@ namespace AdventureGame
                 new Room('C', "black"),
                 new Room('D', "blue"),
                 new Room('E', "yellow"),
-                new Room('F', null),
+                new Room('F',  null),
             };
         }
 
@@ -123,7 +86,7 @@ namespace AdventureGame
         {
             Key key = player.currentRoom.key;
             Door[] currentDoors = player.currentRoom.ConnectedDoors();
-            string keyText = key != null ? $"On the floor you see a {key.KeyColor()} key." : "There is nothing here..";
+            string keyText = key != null ? $"On the floor you see a {key.FetchColor()} key." : "There is nothing here..";
             string isAre = currentDoors.Length == 1 ? "is" : "are";
             string doorDoors = currentDoors.Length == 1 ? "door" : "doors";
 
@@ -136,22 +99,6 @@ namespace AdventureGame
                 Console.WriteLine($"One door is {door.color}, it is {lockedDoor} ");
             }
         }
-
-        //void AvailableActions()
-        //{
-        //    string[] availableOptions;
-        //    Door[] currentDoors = currentRoom.ConnectedDoors(doors);
-        //    bool keyAvailable = currentRoom.key != null;
-        //    int actions = (keyAvailable ? 1 : 0) + currentDoors.Length;
-        //    int doorIndex = 0;
-        //    availableOptions = new string[actions];
-        //    foreach (var door in currentDoors)
-        //    {
-                
-
-        //        doorIndex++;
-        //    }
-        //}
 
         void SetUpGame()
         {

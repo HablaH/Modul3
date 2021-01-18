@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Remoting.Messaging;
 
 namespace AdventureGame
 {
     class Player 
     {
-        public Key[] inventory = new Key[5];
+        public Inventory inventory = new Inventory();
         public string name;
         public Room currentRoom;
 
@@ -20,39 +17,38 @@ namespace AdventureGame
 
         public void PickUp(Key key)
         {
-            int indexOfEmpty = Array.IndexOf(inventory, null);
-
-            inventory[indexOfEmpty] = key.GetKey();
+            inventory.AddItem(key);
+            currentRoom.key = null;
         }
 
-        public void UnlockDoor(Door door, Key key)
+        public void UnlockDoor(string color)
         {
-            if(!currentRoom.ConnectedDoors().Contains(door)) Console.WriteLine("That door isn't in this room");
-            if (!inventory.Contains(key)) Console.WriteLine("You don't have the correct key");
-            else door.Unlock(key);
-        }
+            // Does inventory contain keys group
+            if (!inventory.ContainsGroup(ItemType.Key)) return;
+            // Does key group contain this color
 
-        public void Enter(Door door)
-        {
-            if (!currentRoom.ConnectedDoors().Contains(door))
+            Item key = inventory.FetchItem(color +" key", ItemType.Key);
+
+            // Does this room contain a door with this color
+            foreach (var door in currentRoom.ConnectedDoors())
             {
-                Console.WriteLine("That door isn't in this room");
-                return;
+                if (door.color == color && key != null) door.Unlock();
             }
 
-            currentRoom = currentRoom == door.connectedRooms[0] ? door.connectedRooms[1] : door.connectedRooms[0];
-            Console.WriteLine("you entered");
         }
 
-
-        public string ShowInventory()
+        public void Enter(string color)
         {
-            string str = String.Empty;
-            foreach (Key key in inventory)
+            foreach (var door in currentRoom.ConnectedDoors())
             {
-                if(key != null) str += key.KeyColor() + " key";
+                if (door.color == color && !door.locked)
+                { 
+                    currentRoom = door.GetRoom(currentRoom); 
+                }
             }
-            return str;
+
+            Console.WriteLine($"you entered {color} room");
+
         }
     }
 }

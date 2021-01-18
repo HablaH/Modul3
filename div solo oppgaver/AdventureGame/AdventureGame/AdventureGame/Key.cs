@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AdventureGame
 {
-    class Key
+    class Key : Item
     {
-        public string color;
+        private readonly string color;
 
-        public Key(string color)
+        public Key(string color) : base(color + " key", ItemType.Key, $"this is a {color} key")
         {
             this.color = color;
         }
 
-        public string KeyColor()
+        public string FetchColor()
         {
             return color;
         }
