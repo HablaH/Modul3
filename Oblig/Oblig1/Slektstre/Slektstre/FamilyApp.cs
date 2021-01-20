@@ -10,10 +10,8 @@ namespace Slektstre
     {
         public Person[] _people;
 
-
         public FamilyApp(params Person[] people)
         {
-
             _people = people;
         }
 
@@ -21,64 +19,41 @@ namespace Slektstre
         {
             var commands = command.Split(' ');
 
-            switch (commands[0])
+            return commands[0] switch
             {
-                case "hjelp":
-                    return HelpText;
-                case "liste":
-                    return ListAllPeople();
-                case "vis" when commands[1] != null:
-                    return GetPerson(commands[1])+GetChildren(commands[1]);
-                default: return "noe er feil, skriv 'hjelp' for hjelpetekst";
-            }
+                "hjelp" => HelpText,
+                "liste" => ListAllPeople(),
+                "vis" when int.TryParse(commands[1], out var id) => GetPerson(id) + GetChildren(id),
+                _ => "noe er feil, skriv 'hjelp' for hjelpetekst"
+            };
         }
 
-        public bool HasChildren(int id)
+        public string GetPerson(int id)
         {
-            return _people.Any(p => p.Father != null && p.Father.Id == id|| p.Mother != null && p.Mother.Id == id);
+            return _people.ToList().Find(p => p.Id == id)?.GetDescription();
         }
 
-        public string GetChildren(string Id)
+        public string GetChildren(int id)
         {
             StringBuilder str = new StringBuilder();
-            bool IdIsInt = int.TryParse(Id, out var id);
-            if (!HasChildren(id)) return str.ToString();
-                str.Append("  Barn:\n");
-            
-                foreach (var person in _people)
-                {
-                    bool hasFather = person.Father != null;
-                    str.Append(hasFather && person.Father.Id == id ? "    " + person.GetChildDescription() + "\n" : string.Empty);
-                    bool hasMother = person.Mother != null;
-                    str.Append(hasMother && person.Mother.Id == id ? "    " + person.GetChildDescription() + "\n" : string.Empty);
-            }
-            return str.ToString();
-        }
-
-        public string GetPerson(string Id)
-        {
-            StringBuilder str = new StringBuilder();
-            bool IdIsInt = int.TryParse(Id, out var id);
-
-            if (!IdIsInt) str.Append($"Ingen person med denne Id: {id}"); 
-                
             foreach (var person in _people)
             {
-                if (person.Id == id) str.Append(person.GetDescription());
+                if (HasFamily(person, id)) str.Append($"    {person.GetPersonalDescription()}\n");
             }
 
+            if (str.Length > 0) str.Insert(0, "\n  Barn:\n");
+
             return str.ToString();
+        }
+
+        public bool HasFamily(Person person, int id)
+        {
+            return person.Father != null && person.Father.Id == id || person.Mother != null && person.Mother.Id == id;
         }
 
         public string ListAllPeople()
         {
-            var str = new StringBuilder();
-            foreach (var person in _people)
-            {
-                str.Append(person.GetDescription() + "\r\n");
-            }
-
-            return str.ToString();
+            return _people.Aggregate("", (seed, person) => seed + person.GetDescription() + "\n");
         }
 
         public string WelcomeMessage = "Velkommen til familie appen!";

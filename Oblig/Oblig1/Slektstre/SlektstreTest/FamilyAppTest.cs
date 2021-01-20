@@ -36,7 +36,7 @@ namespace SlektstreTest
 
             var app = new FamilyApp(harald, haakon);
             var actualResponse = app.HandleCommand("vis 3");
-            var expectedResponse = "Haakon Magnus (Id=3) Født: 1973 Far: Harald (Id=6)\n";
+            var expectedResponse = "Haakon Magnus (Id=3) Født: 1973 Far: Harald (Id=6)";
             Assert.AreEqual(expectedResponse, actualResponse);
         }
     }

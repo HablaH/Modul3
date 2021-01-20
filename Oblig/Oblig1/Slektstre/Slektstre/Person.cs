@@ -14,36 +14,31 @@ namespace Slektstre
         public Person Father;
         public Person Mother;
 
-        public string GetDescription()
+        public string GetPersonalDescription()
         {
-            StringBuilder str = new StringBuilder();
-            str.Append(FirstName != null? FirstName + " ": string.Empty);
-            str.Append(LastName != null ? LastName + " " : string.Empty);
-            str.Append($"(Id={Id})");
-            str.Append(BirthYear != 0 ? " Født: "+BirthYear.ToString() : string.Empty);
-            str.Append(DeathYear != 0 ? " Død: "+DeathYear.ToString() : string.Empty);
+            var firstName = FirstName != null ? FirstName + " " : string.Empty;
+            var lastName = LastName != null ? LastName + " " : string.Empty;
+            var birthYear = BirthYear != 0 ? " Født: " + BirthYear.ToString() : string.Empty;
+            var deathYear = DeathYear != 0 ? " Død: " + DeathYear.ToString() : string.Empty;
 
-            bool hasFather = Father != null;
-            bool hasMother = Mother != null;
-
-            str.Append(hasFather ? " Far: " : string.Empty);
-            str.Append(hasFather ? Father.FirstName != null ? Father.FirstName + " " : string.Empty : string.Empty);
-            str.Append(hasFather ? Father.Id != 0 ? $"(Id={Father.Id.ToString()})" : string.Empty : string.Empty);
-            str.Append(hasMother ? " Mor: " : string.Empty);
-            str.Append(hasMother ? Mother.FirstName != null ? Mother.FirstName + " " : string.Empty : string.Empty);
-            str.Append(hasMother ? Mother.Id != 0 ? $"(Id={Mother.Id.ToString()})" : string.Empty : string.Empty);
-            str.Append("\n");
-            return str.ToString();
+            return $"{firstName}{lastName}(Id={Id}){birthYear}{deathYear}";
         }
 
-        public string GetChildDescription()
+        public string GetDescription()
         {
-            StringBuilder str = new StringBuilder();
-            str.Append(FirstName != null ? FirstName + " " : string.Empty);
-            str.Append(LastName != null ? LastName + " " : string.Empty);
-            str.Append($"(Id={Id})");
-            str.Append(BirthYear != 0 ? " Født: " + BirthYear.ToString() : string.Empty);
-            str.Append(DeathYear != 0 ? " Død: " + DeathYear.ToString() : string.Empty);
+            var str = new StringBuilder();
+            str.Append(GetPersonalDescription());
+
+            if (Father != null)
+            {
+                var fatherName = Father.FirstName != null ? Father.FirstName + " " : string.Empty;
+                str.Append($" Far: {fatherName}(Id={Father.Id.ToString()})");
+            }
+            if (Mother != null)
+            {
+                string motherName = Mother.FirstName != null ? Mother.FirstName + " " : string.Empty;
+                str.Append($" Mor: {motherName}(Id={Mother.Id.ToString()})");
+            }
             return str.ToString();
         }
     }
