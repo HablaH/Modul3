@@ -14,22 +14,13 @@ namespace AdventureGame
         public Game()
         {
             SetUpGame();
-            
-            Console.WriteLine(player.name);
             Intro();
-
 
             while (!victory)
             {
                 HandleCommand(Console.ReadLine());
                 ShowRoom();
             }
-
-
-
-            //HandleCommand(player1, Console.ReadLine());
-            //Console.WriteLine($"{player1.name} has {player1.ShowInventory()}");
-            //Console.WriteLine($"on the floor you see {player1.currentRoom.key}");
         }
 
         public void HandleCommand(string command)
@@ -46,8 +37,8 @@ namespace AdventureGame
                 case "pickup": player.PickUp(player.currentRoom.key); break;
                 case "inventory": Console.WriteLine(player.inventory.ToString()); break;
                 case "inspect": break;
+                default: Console.WriteLine("Command not recognized");break;
             }
-            return;
         }
 
         Room[] CreateMap()

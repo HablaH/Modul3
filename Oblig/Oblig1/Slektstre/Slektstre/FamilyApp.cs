@@ -53,7 +53,7 @@ namespace Slektstre
 
         public string ListAllPeople()
         {
-            return _people.Aggregate("", (seed, person) => seed + person.GetDescription() + "\n");
+            return _people.Aggregate(string.Empty, (seed, person) => seed + person.GetDescription() + "\n");
         }
 
         public string WelcomeMessage = "Velkommen til familie appen!";

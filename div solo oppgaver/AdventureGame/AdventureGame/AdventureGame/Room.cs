@@ -7,6 +7,7 @@ namespace AdventureGame
     {
         public Key key;
         public char roomName;
+        public Monster monster;
 
 
         public Room(char roomName, string color)

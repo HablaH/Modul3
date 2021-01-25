@@ -39,16 +39,16 @@ namespace AdventureGame
 
         public new string ToString()
         {
-            string str = String.Empty;
+            var str = new StringBuilder();
             foreach (var group in Items)
             {
                 foreach (var item in group.Value)
                 {
-                    str += item.Name + "\n";
+                    str.AppendLine(item.Name + "\n");
                 }
             }
 
-            return str;
+            return str.ToString();
         }
     }
 }

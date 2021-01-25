@@ -17,6 +17,7 @@ namespace AdventureGame
 
         public void PickUp(Key key)
         {
+            if (currentRoom.key == null) return;
             inventory.AddItem(key);
             currentRoom.key = null;
         }
@@ -47,7 +48,7 @@ namespace AdventureGame
                 }
             }
 
-            Console.WriteLine($"you entered {color} room");
+            Console.WriteLine($"you entered {color} door");
 
         }
     }
