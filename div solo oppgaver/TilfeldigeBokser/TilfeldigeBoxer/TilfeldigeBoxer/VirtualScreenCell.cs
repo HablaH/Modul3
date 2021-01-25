@@ -22,20 +22,27 @@ namespace TilfeldigeBoxer
         }
         public char GetCharacter()
         {
-            char c = ' ';
-            if (!Up && !Down && !Left && !Right) c = ' ';   //blank
-            if (!Up && !Down && Left && Right)   c = '─';   //horisontal line
-            if (Up && Down && !Left && !Right)   c = '│';   //vertical line
-            if (!Up && Down && !Left && Right)   c = '┌';   //upper left corner
-            if (!Up && Down && Left && !Right)   c = '┐';   //upper right corner
-            if (Up && !Down && !Left && Right)   c = '└';   //lower left corner
-            if (Up && !Down && Left && !Right)   c = '┘';   //lower right corner
-            if (Up && Down && !Left && Right)    c = '├';   //no left
-            if (Up && Down && Left && !Right)    c = '┤';   //no right
-            if (!Up && Down && Left && Right)    c = '┬';   //no up
-            if (Up && !Down && Left && Right)    c = '┴';   //no down
-            if (Up && Down && Left && Right)     c = '┼';   //cross
-            return c;
+            //if (!Up && !Down && Left && Right) return '─';   //horisontal line
+            //if (Up && Down && !Left && !Right) return '│';   //vertical line
+            //if (!Up && Down && !Left && Right) return '┌';   //upper left corner
+            //if (!Up && Down && Left && !Right) return '┐';   //upper right corner
+            //if (Up && !Down && !Left && Right) return '└';   //lower left corner
+            //if (Up && !Down && Left && !Right) return '┘';   //lower right corner
+            //if (Up && Down && !Left && Right) return '├';   //no left
+            //if (Up && Down && Left && !Right) return '┤';   //no right
+            //if (!Up && Down && Left && Right) return '┬';   //no up
+            //if (Up && !Down && Left && Right) return '┴';   //no down
+            //if (Up && Down && Left && Right) return '┼';   //cross
+            //return ' ';                                        //blank
+
+            char[] chars = {' ', '\0', '\0', '─', '\0', '┌', '┐', '┬', '\0', '└', '┘', '┴', '│', '├', '┤', '┼'};
+            var boolByte = 0;
+            boolByte ^= Right ? 1 << 0 : 0;
+            boolByte ^= Left ? 1 << 1 : 0;
+            boolByte ^= Down ? 1 << 2 : 0;
+            boolByte ^= Up ? 1 << 3 : 0;
+            return chars[boolByte];
+
         }
 
         public void AddHorizontal()
