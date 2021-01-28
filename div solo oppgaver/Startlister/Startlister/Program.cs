@@ -3,40 +3,65 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace Startlister
 {
     class Program
     {
+        public List<Club> Clubs;
+        public List<Registration> RegistrationList;
+        
+
         static void Main(string[] args)
         {
+            
+            var RegistrationList = new List<Registration>();
+
+            ReadList()
+
+
+
+
+
+
+
+
+        }
+        
+
+        public void CreateClubs()
+        {
+            foreach (var person in RegistrationList)
+            {
+                if (Clubs.Count == 0) Clubs.Add(new Club(person.Club));
+                if (!Clubs.Exists(club => club?.Name == person.Club)) Clubs.Add(new Club(person.Club));
+            }
+
+            foreach (var club in Clubs)
+            {
+                club.Members = RegistrationList.Where(p => p.Club == club.Name).ToList();
+            }
+        }
+
+        public void ReadList()
+        {
             var allText = File.ReadAllLines("startlisterRaw.csv");
-            var registrationList = new List<Registration>();
 
             foreach (string line in allText)
             {
                 string[] words = line.Split(',');
-                registrationList.Add(new Registration(words[0], words[1], words[2], words[3], words[4], words[5]));
+                RegistrationList.Add(new Registration(words[0], words[1], words[2], words[3], words[4], words[5]));
             }
-            registrationList.RemoveRange(0,6);
+            RegistrationList.RemoveRange(0, 6);
+        }
 
-            var clubs = new List<Club>();
-
-            foreach (var person in registrationList)
+        public string ClubStats()
+        {
+            foreach (var VARIABLE in Clubs)
             {
-                if (clubs.Count == 0) clubs.Add(new Club(person.Club));
-                if (!clubs.Exists(club => club?.Name == person.Club)) clubs.Add(new Club(person.Club));
-            }
-
-            foreach (var club in clubs)
-            {
-                club.Members = registrationList.Where(p => p.Club == club.Name).ToList();
-            }
-
-            foreach (var club in clubs)
-            {
-                Console.WriteLine(club.GetMembers());
+                
             }
         }
     }

@@ -42,7 +42,6 @@ namespace TilfeldigeBoxer
             boolByte ^= Down ? 1 << 2 : 0;
             boolByte ^= Up ? 1 << 3 : 0;
             return chars[boolByte];
-
         }
 
         public void AddHorizontal()
