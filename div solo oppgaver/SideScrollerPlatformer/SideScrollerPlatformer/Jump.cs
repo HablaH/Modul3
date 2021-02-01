@@ -18,7 +18,7 @@ namespace SideScrollerPlatformer
             {
                 Player player = (Player)obj;
                 if (player.IsFalling) return true;
-                player.Move(new Vector(0, -1));
+                player.Move(new Vector(0, -2));
                 //Console.Beep(150,50);
                 return true;
             }

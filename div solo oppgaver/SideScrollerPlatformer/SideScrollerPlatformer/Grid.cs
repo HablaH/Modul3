@@ -57,6 +57,14 @@ namespace SideScrollerPlatformer
             return SetFillAtVector(position.X, position.Y, fill);
         }
 
+        public void FillPlatform(int y,int startX, int width, char fill = '#')
+        {
+            if (!WithinRange(0, y)) return;
+            for (int x = startX; x < startX+width ; x++)
+            {
+                SetFillAtVector(x, y, fill);
+            }
+        }
         public void FillHorizontal(int y,char fill = '#')
         {
             if (!WithinRange(0, y)) return;

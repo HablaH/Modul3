@@ -14,6 +14,7 @@ namespace SideScrollerPlatformer
             var inputManager = new InputManager(player);
             var gravityManager = new GravityManager(grid, player);
             grid.FillHorizontal(19, '█');
+            grid.FillPlatform(17,5,5, '█');
             Console.WriteLine(grid);
 
 
@@ -28,7 +29,6 @@ namespace SideScrollerPlatformer
                     { 
                         var key = Console.ReadKey().KeyChar;
                         inputManager.HandleInput(key);
-                        
                     }
 
                     gravityManager.Fall();
