@@ -21,7 +21,7 @@ namespace Controller
 
         public override void Use()
         {
-            
+            button.Use();
         }
 
         public void Use(int dir, int per)
